@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Skill Tree - interattivo (D3)</title>
+<style>
+html,body { height:100%; margin:0 }
+body { font-family: Arial, Helvetica, sans-serif; display:flex; height:100vh; }
+#viewer { flex:1; overflow:auto; background:#111; position:relative; }
+#viewer svg { display:block; max-width:100%; height:auto; }
+#info { width:320px; background:#f7f7f7; padding:10px; box-shadow:-2px 0 4px rgba(0,0,0,0.2); overflow:auto }
+#info h2 { margin-top:0; }
+@media (max-width:800px) {
+  body { flex-direction:column; height:100vh; }
+  #info { width:100%; height:180px; box-shadow:none; }
+}
+</style>
+</head>
+<body>
+<div id="viewer"><svg xmlns="http://www.w3.org/2000/svg" width="3420" height="1080" viewBox="0 0 3420 1080">
+<defs>
+<style type="text/css"><![CDATA[
+.node { cursor: pointer; }
+.text { font-family: Arial, Helvetica, sans-serif; font-size: 12px; fill: #fff; }
+.title { font-weight: bold; font-size: 13px; }
+.line { stroke: #888; stroke-width: 3; stroke-linecap: round; }
+.card { rx:10; ry:10; }
+.tooltip { pointer-events:none; font-size:12px; }
+]]></style>
+</defs>
+<line class="line" x1="170.0" y1="840.0" x2="170.0" y2="960.0" />
+<line class="line" x1="170.0" y1="720.0" x2="170.0" y2="840.0" />
+<line class="line" x1="2590.0" y1="240.0" x2="2810.0" y2="120.0" />
+<line class="line" x1="3030.0" y1="240.0" x2="3030.0" y2="240.0" />
+<line class="line" x1="3030.0" y1="240.0" x2="2810.0" y2="120.0" />
+<line class="line" x1="170.0" y1="240.0" x2="390.0" y2="120.0" />
+<line class="line" x1="610.0" y1="240.0" x2="390.0" y2="120.0" />
+<line class="line" x1="390.0" y1="240.0" x2="390.0" y2="120.0" />
+<line class="line" x1="390.0" y1="360.0" x2="390.0" y2="240.0" />
+<line class="line" x1="1050.0" y1="240.0" x2="1270.0" y2="120.0" />
+<line class="line" x1="1490.0" y1="240.0" x2="1270.0" y2="120.0" />
+<line class="line" x1="1270.0" y1="840.0" x2="1270.0" y2="720.0" />
+<line class="line" x1="1270.0" y1="960.0" x2="1270.0" y2="840.0" />
+<line class="line" x1="390.0" y1="720.0" x2="170.0" y2="720.0" />
+<line class="line" x1="1270.0" y1="480.0" x2="1270.0" y2="360.0" />
+<line class="line" x1="1930.0" y1="720.0" x2="1930.0" y2="840.0" />
+<line class="line" x1="1710.0" y1="720.0" x2="1930.0" y2="840.0" />
+<line class="line" x1="1930.0" y1="120.0" x2="1710.0" y2="120.0" />
+<line class="line" x1="2150.0" y1="600.0" x2="2150.0" y2="720.0" />
+<line class="line" x1="2150.0" y1="120.0" x2="1930.0" y2="120.0" />
+<line class="line" x1="2370.0" y1="120.0" x2="2150.0" y2="120.0" />
+<line class="line" x1="390.0" y1="480.0" x2="170.0" y2="360.0" />
+<line class="line" x1="390.0" y1="480.0" x2="390.0" y2="360.0" />
+<line class="line" x1="390.0" y1="480.0" x2="610.0" y2="360.0" />
+<line class="line" x1="610.0" y1="360.0" x2="610.0" y2="240.0" />
+<line class="line" x1="1930.0" y1="600.0" x2="1930.0" y2="720.0" />
+<line class="line" x1="1710.0" y1="600.0" x2="1710.0" y2="720.0" />
+<line class="line" x1="3030.0" y1="360.0" x2="3030.0" y2="240.0" />
+<line class="line" x1="3250.0" y1="360.0" x2="3030.0" y2="240.0" />
+<line class="line" x1="3030.0" y1="480.0" x2="3030.0" y2="360.0" />
+<line class="line" x1="3250.0" y1="480.0" x2="3250.0" y2="360.0" />
+<line class="line" x1="3030.0" y1="600.0" x2="3030.0" y2="480.0" />
+<line class="line" x1="3030.0" y1="720.0" x2="3030.0" y2="600.0" />
+<line class="line" x1="2590.0" y1="360.0" x2="2590.0" y2="240.0" />
+<line class="line" x1="2590.0" y1="480.0" x2="2590.0" y2="360.0" />
+<line class="line" x1="2590.0" y1="600.0" x2="2590.0" y2="480.0" />
+<line class="line" x1="1270.0" y1="360.0" x2="1050.0" y2="240.0" />
+<line class="line" x1="1270.0" y1="360.0" x2="1490.0" y2="240.0" />
+<line class="line" x1="170.0" y1="360.0" x2="170.0" y2="240.0" />
+<line class="line" x1="2150.0" y1="720.0" x2="1930.0" y2="840.0" />
+<g class="node" id="node-5CqC5JPQiGMuKsw4" transform="translate(90.0,925.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Mobilità</text>
+</g>
+<g class="node" id="node-91hOycVV6Lxhrm9T" transform="translate(310.0,85.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Tenacia</text>
+</g>
+<g class="node" id="node-qZrzGr3SC3l94nPw" transform="translate(1190.0,685.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Altromondo</text>
+</g>
+<g class="node" id="node-1p6QqELvyEL4idrI" transform="translate(1190.0,85.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Mentalità</text>
+</g>
+<g class="node" id="node-TugkHd8rpyy7IyJf" transform="translate(90.0,805.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Agile</text>
+<title>Agile: &lt;p&gt;Cammini rapidamente. La tua Velocità aumenta di 1,5 metri.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-GqrQAWbL6IwFC1iL" transform="translate(90.0,685.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Passo Morbido</text>
+<title>Passo Morbido: &lt;p&gt;Ti muovi con agilità e rapidità. Puoi fare un Passo anche in un terreno difficile.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-jpjAvzaSG0MX942j" transform="translate(2730.0,85.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Pet Terapist</text>
+</g>
+<g class="node" id="node-M3B3JKSqT8NTyjWO" transform="translate(2510.0,205.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Animale Domestico</text>
+<title>Animale Domestico: &lt;p&gt;Hai un animale domestico: un animale Minuscolo di un tipo a tua scelta, come un gatto, un uccello o un roditore. Ha il tratto servitore, il che significa che ottieni 2 azioni durante il tuo turno se usi l'azione @UUID[Compendium.pf2e.actionspf2e.Item.q9nbyIF0PEBqMtYe]{Comandare un Animale} per impartirgli degli ordini; questo sostituisce i normali effetti di Comandare un Animale e non hai bisogno di effettuare una prova di Natura. Un animale domestico non può sferrare Colpi.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Livello&lt;/strong&gt; Il livello del tuo animale domestico è pari al tuo.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Modificatori e CA&lt;/strong&gt; I modificatori dei tiri salvezza e la CA del tuo animale domestico sono uguali ai tuoi prima di applicare i bonus o le penalità di circostanza o di status. L'animale domestico usa 3 + il tuo livello come suo modificatore di Percezione, Acrobazia e Furtività e solo il tuo livello come modificatore per le sue altre prove di abilità. Non ha né usa i propri modificatori di attributo e non può mai beneficiare di bonus di oggetto.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Punti Ferita&lt;/strong&gt; Il tuo animale domestico ha 5 Punti Ferita per livello.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Sensi&lt;/strong&gt; Il tuo animale domestico ha visione crepuscolare e può ottenere sensi aggiuntivi dalle capacità da animale domestico.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Velocità&lt;/strong&gt; La velocità del tuo animale domestico è 7,5 metri. Puoi scegliere di avere invece un animale domestico acquatico, che respira in acqua anziché respirare aria e ha il tratto acquatico, non ha Velocità sul terreno ma una Velocità di nuotare di 7,5 metri.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Capacità da Animale Domestico&lt;/strong&gt; Quando ottieni un animale domestico, scegli due delle capacità seguenti. Se il tuo animale domestico è un animale che avrebbe una di queste capacità di natura (ad esempio, un gufo ha una Velocità di volare), devi selezionare quella capacità. Il tuo animale domestico non può essere un animale che per sua natura ha più capacità da animale domestico del massimo previsto. In alcuni casi, il GM potrebbe aggiungere alcune capacità del famiglio (descritte alle pagg. 212-213 Manuale del Giocatore) alle capacità da animale domestico tra cui puoi scegliere.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Anfibio&lt;/strong&gt; Ottiene il tratto anfibio, che gli permette di respirare sia l'aria che in acqua e ha sia una Velocità sul terreno, sia una Velocità di nuotare, entrambe pari alla Velocità più alta che possiede tra quella sul terreno e quella di nuotare.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Scavatore&lt;/strong&gt; Ottiene una Velocità di scavare di 1,5 metri, che gli permette di scavare dei buchi Minuscoli.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Scalatore&lt;/strong&gt; Ottiene una Velocità di scalare di 7,5 metri.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Scurovisione&lt;/strong&gt; Ottiene scurovisione.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Ecolocalizzazione&lt;/strong&gt; Può usare l'udito come senso preciso entro 6 metri.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Movimento Veloce&lt;/strong&gt; Aumenta una delle Velocità dell'animale domestico da 7,5 metri a 12 metri.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Volante&lt;/strong&gt; Ottiene una Velocità di volare di 7,5 metri.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Destrezza Manuale&lt;/strong&gt; Può usare fino a due dei suoi arti come se fossero mani per eseguire azioni col tratto maneggiare.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Fiuto&lt;/strong&gt; Usa fiuto come senso impreciso entro 9 metri.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Robusto&lt;/strong&gt; I PF massimi del tuo animale domestico aumentano di 2 per livello.&lt;/li&gt;&lt;/ul&gt;&lt;hr /&gt;&lt;p&gt;&lt;strong&gt;Speciale&lt;/strong&gt; Puoi ottenere un nuovo animale domestico riaddestrando questo talento e rilasciando qualsiasi altro animale domestico tu avessi in precedenza. Se in seguito ottieni un famiglio o un altro compagno che usa il talento Animale Domestico, puoi immediatamente riaddestrare questo talento.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-1aaDaWWknL2fqPj8" transform="translate(2950.0,205.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Cavalcare</text>
+<title>Cavalcare: &lt;p&gt;Quando Comandi un Animale su cui sei in sella di compiere un'azione di movimento (come Avanzare) non devi effettuare la prova e ottieni un successo automatico. L'animale su cui sei in sella agisce nel tuo turno come un servitore. Se Monti un animale nel bel mezzo di un incontro, salta il suo turno successivo e agisce nel tuo prossimo turno. Vedi pag. 250 per saperne di più sul funzionamento di Comandare un Animale.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-j5lgVmMwEKX3qadl" transform="translate(90.0,205.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Duro a Morire</text>
+<title>Duro a Morire: &lt;p&gt;Sei duro a morire, più di molte altre persone. Muori per via della condizione morente a 5, invece che a morente 4.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-cJ6Ybrn5yPr7CS7o" transform="translate(530.0,205.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Ripresa Rapida</text>
+<title>Ripresa Rapida: &lt;p&gt;Il tuo corpo è in grado di riprendersi molto più in fretta dalle afflizioni. Quando riposi, recuperi il doppio dei Punti Ferita. Ogni volta che superi un tiro salvezza su Tempra contro un avvelenamento o una malattia in corso, ne riduci la fase di 2 o 1 se la tossina o il morbo sono virulenti. Ogni successo critico ottenuto contro un avvelenamento o una malattia in corso ne riduce la fase di 3 o 2 se sono virulenti. Inoltre, quando riposi per una notte, riduci la gravità della tua condizione risucchiato di 2 anziché di 1.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-vCOEOADxLTLI9lrq" transform="translate(310.0,205.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Robustezza</text>
+<title>Robustezza: &lt;p&gt;Sopporti le sofferenza fisiche meglio di molti prima di crollare. Aumenta i tuoi Punti Ferita massimi di un numero pari al tuo livello e la CD delle prove per il recupero è pari a 9 + il tuo valore della condizione morente.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-IjJz4Z0gT18uuI9P" transform="translate(310.0,325.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Controllo del Respiro</text>
+<title>Controllo del Respiro: &lt;p&gt;Riesci a regolare incredibilmente bene la tua respirazione. Ciò ti conferisce alcuni vantaggi quando sei a corto d'aria, e quando respirare è pericoloso. Puoi trattenere il respiro 25 volte più a lungo del normale prima di soffocare. Ottieni bonus di circostanza + 1 ai tiri salvezza contro le minacce inalate, come veleni inalati, e consideri i successi su questi tiri salvezza come successi critici.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-ca6xhKVLNdItTE2P" transform="translate(970.0,205.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Intelletto Acuto</text>
+<title>Intelletto Acuto: &lt;p&gt;La tua elusività o abilità nell'osservare sfugge alla comprensione di molti colleghi nella tua professione. Scegli tra tiri salvezza su Tempra, Riflessi o Volontà, o Percezione. Divieni esperto nella tua scelta. Al 17° livello, ne divieni maestro.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-ASYbOjkKTjrQUA3X" transform="translate(1410.0,205.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Iniziativa Incredibile</text>
+<title>Iniziativa Incredibile: &lt;p&gt;Puoi reagire più velocemente degli altri. Ottieni bonus di circostanza +2 ai tiri di iniziativa.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-zQHAzD0AdQGlauJW" transform="translate(1190.0,805.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Stirpe Acquisita</text>
+<title>Stirpe Acquisita: &lt;p&gt;Sei completamente immerso nella cultura e nelle tradizioni di un'altra stirpe, che tu sia nato in quell'ambiente, che te lo sia guadagnato tramite qualche rito di passaggio o che tu sia stato segnato da un'importante amicizia o storia d'amore. Scegli una stirpe comune o un'altra stirpe alla quale hai accesso. Puoi selezionare i talenti di quella stirpe, oltre ai talenti di stirpe del tuo personaggio, fintanto che quei talenti di stirpe non necessitino, a discrezione del GM, di particolari caratteristiche fisiologiche di cui sei sprovvisto.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-7e6NjZOtWaMjjbU8" transform="translate(1190.0,925.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Mondi Diversi</text>
+<title>Mondi Diversi: &lt;p&gt;La tua variegata esperienza in società diverse si è sviluppata in una vita completamente separata. Creati una seconda identità con un nome, una storia e un background completamente diversi. Questa identità deve appartenere a una delle stirpi di cui puoi scegliere i talenti di stirpe. Ottieni il grado di competenza addestrato nell'abilità di Sapienza del secondo background scelto (non ottieni nessun altro dei benefici di quel background) e bonus di circostanza +4 alle prove di Inganno quando fai un'affermazione coerente con la tua seconda identità o quando cerchi di camuffarti assumendo la tua seconda identità.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-JOoozkM3VujHjccl" transform="translate(310.0,685.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Zampettare</text>
+<title>Zampettare: &lt;p&gt;Puoi strisciare rapidamente sul terreno. Puoi @UUID[Compendium.pf2e.actionspf2e.Item.Tj055UcNm6UEgtCg]{Andare Carponi} fino a metà della tua Velocità.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-R3W6zugygEmrpSBQ" transform="translate(1190.0,445.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Investitura Incredibile</text>
+<title>Investitura Incredibile: &lt;p&gt;Sei incredibilmente bravo nell'investire più oggetti magici. Aumenta il limite degli oggetti investiti da 10 a 12.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-eDm6Ya2Xz3jQYb0W" transform="translate(1630.0,85.0)">
+<rect class="card" width="160" height="70" fill="#8f0000" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Segugio</text>
+</g>
+<g class="node" id="node-lOFKAJiEHa9vbyUb" transform="translate(1850.0,805.0)">
+<rect class="card" width="160" height="70" fill="#db3de6" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Traffichino</text>
+</g>
+<g class="node" id="node-dyEC2FI4Vd3hTo3h" transform="translate(1850.0,685.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Gestore di Mercenari</text>
+<title>Gestore di Mercenari: &lt;p&gt;Sei in grado di trovare e assicurarti manodopera migliore degli altri. Quando ti procuri un mercenario per un servizio, quel mercenario ottiene bonus di circostanza +2 a tutte le prove di abilità. Questo bonus di circostanza si applica sia ai mercenari addestrati che a quelli senza addestramento e non incide sul costo del servizio o della manodopera fornita.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-Wxr4xHAJ7Lj45RqS" transform="translate(1630.0,685.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Pianificatore Preveggente</text>
+<title>Pianificatore Preveggente: &lt;p&gt;&lt;strong&gt;Costo&lt;/strong&gt; il Prezzo dell'oggetto scelto&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Requisiti&lt;/strong&gt; Non hai usato questa capacità dall'ultima volta che hai potuto acquistare beni&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;Crei regolarmente piani complessi e di emergenza, usando le tue risorse per metterli in atto. Impieghi 1 minuto per rimuovere il tuo zaino, poi rimuovi con cura un oggetto che non avevi dichiarato di aver acquistato in precedenza: hai intuito che ti sarebbe servito e lo hai acquistato all'ultima occasione. &lt;/p&gt;
+&lt;p&gt;L'oggetto deve essere un equipaggiamento da avventura (dalla tabella del &lt;em&gt;Manuale di Gioco&lt;/em&gt; o da altre fonti di equipaggiamento da avventura), e non può essere un'arma, un'armatura, un oggetto alchemico, un oggetto magico o un altro tesoro.&lt;/p&gt;
+&lt;p&gt;Deve essere comune e di un livello non superiore alla metà del tuo livello, e il suo Volume deve essere abbastanza leggero da averlo potuto portare senza appesantirti.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-rPN4KjvxzdnVIZwJ" transform="translate(1850.0,85.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Ricerca Scrupolosa</text>
+<title>Ricerca Scrupolosa: &lt;p&gt;Impieghi più tempo a cercare, per assicurarti di trovare tutto. Quando @UUID[Compendium.pf2e.actionspf2e.Item.TiNDYUGlMmxzxBYU]{Cerchi}, puoi impiegare il doppio del tempo nella ricerca. Normalmente questo significa che Cerchi a un ritmo di un quarto della tua Velocità, fino a un massimo di 45 metri al minuto o 22,5 metri al minuto per controllare ogni luogo prima di entrarvi. Se lo fai, ottieni bonus di circostanza +2 alle tue prove di Percezione per @UUID[Compendium.pf2e.actionspf2e.Item.BlAOM2X92SI6HMtJ]{Individuare}.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-If94D47znME1v4UW" transform="translate(2070.0,565.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Riparazione Improvvisata</text>
+<title>Riparazione Improvvisata: &lt;p&gt;Sei abile nel Riparare rapidamente gli oggetti Danneggiati, ma le tue Riparazioni non sono destinate a durare per sempre.&lt;/p&gt;
+&lt;p&gt;Esegui una @UUID[Compendium.pf2e.actionspf2e.Item.bT3skovyLUtP22ME]{Riparazione} rapida di un oggetto non magico rotto in tuo possesso. Fino a quando l'oggetto non subisce nuovamente dei danni, puoi continuare a usarlo come oggetto scadente del suo tipo. Questa riparazione non ripristina Punti Ferita, quindi l'oggetto è facile da distruggere. Una volta che viene Riparato normalmente in modo che non sia più rotto, l'oggetto non è più scadente. &lt;/p&gt;</title>
+</g>
+<g class="node" id="node-poIiusZNN1jklrHJ" transform="translate(2070.0,85.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Ricerca Spedita</text>
+<title>Ricerca Spedita: &lt;p&gt;Disponi di un metodo che ti permette di cercare rapidamente scoprendo dettagli e segreti al doppio della velocità. Quando Cerchi in un'area impieghi la metà del tempo. Ciò significa che mentre esplori, raddoppi la Velocità con cui ti muovi e ti assicuri di aver esaminato un'area prima di entrarvi (fino a metà della tua Velocità). Se sei leggendario in Percezione, Cerchi in un'area quattro volte più rapidamente.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-EndmOOWgZxBPt0yE" transform="translate(2290.0,85.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Esploratore Incredibile</text>
+<title>Esploratore Incredibile: &lt;p&gt;Quando vai in esplorazione sei particolarmente attento al pericolo e dai ai tuoi alleati momenti preziosi per prepararsi a combattere.&lt;/p&gt;
+&lt;p&gt;Quando usi l'attività di esplorazione @UUID[Compendium.pf2e.actionspf2e.Item.kV3XM0YJeS2KCSOb]{Perlustrare}, conferisci ai tuoi alleati bonus di circostanza +2 ai loro tiri di Iniziativa, anziché bonus di circostanza +1.&lt;/p&gt;
+&lt;p&gt;@UUID[Compendium.pf2e.other-effects.Item.la8rWwUtReElgTS6]{Effetto: Perlustrare (Esploratore Incredibile)}&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-2oLFkDaWbRgPcT2K" transform="translate(310.0,445.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Sanguine Tenacity</text>
+<title>Sanguine Tenacity: &lt;p&gt;Your blood carries permanent regenerative properties. The penalties from @UUID[Compendium.pf2e.conditionitems.Item.MIRkyAjyBeXivMa7]{Enfeebled} and the penalties and lost HP from @UUID[Compendium.pf2e.conditionitems.Item.4D2KBtexWXa6oUMR]{Drained} both affect you as if the condition values were 1 lower than they actually are. You also gain resistance 5 to persistent bleed damage and reduce the DC of checks to recover from persistent bleed damage to 11, or 6 if you have particularly effective assistance.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-FMI3KhYYjsP7Fhly" transform="translate(530.0,325.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Robust Health</text>
+<title>Robust Health: &lt;p&gt;Your physiology responds well to first aid. You gain a circumstance bonus to the number of Hit Points you regain equal to your level from a successful attempt to @UUID[Compendium.pf2e.actionspf2e.Item.1kGNdIIhuglAjIp9]{Treat your Wounds} or use @UUID[Compendium.pf2e.feats-srd.Item.wYerMk6F1RZb0Fwt]{Battle Medicine} on you. After you or an ally use Battle Medicine on you, you become temporarily immune to that Battle Medicine for only 1 hour, instead of 1 day.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-xotkMLtNWcctubh2" transform="translate(1850.0,565.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">A Home in Every Port</text>
+<title>A Home in Every Port: &lt;p&gt;You have a reputation in towns and villages you've visited, and residents are always willing to open their doors to you.&lt;/p&gt;
+&lt;p&gt;When in a town or village, during downtime, you can spend 8 hours to locate a resident willing to provide lodging for you and up to six allies for up to 24 hours at no charge. The standard of living within the acquired lodging is comfortable, and square meals are provided at no cost.&lt;/p&gt;
+&lt;p&gt;After 24 hours, you must pay standard prices for further lodging and meals or use this feat again to find a new resident willing to host you.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-MSsZCtPiAKXAs5Ay" transform="translate(1630.0,565.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Monouso Preveggente</text>
+<title>Monouso Preveggente: &lt;p&gt;Puoi prevedere in anticipo di quali monouso potresti aver bisogno. Quando usi Pianificatore Preveggente, puoi tirar fuori un oggetto monouso dal tuo zaino, invece di un equipaggiamento da avventura. L'oggetto monouso deve comunque essere comune e di un livello non superiore alla metà del tuo livello, e il suo Volume deve essere abbastanza leggero da averlo potuto portare senza appesantirti.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-gFI3OwkgPyFo7Nxt" transform="translate(2950.0,325.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Cavalcatura Impressionante</text>
+<title>Cavalcatura Impressionante: &lt;p&gt;Hai addestrato la tua cavalcatura a diventare una forza poderosa sul campo di battaglia. La cavalcatura che hai ottenuto con il talento Dedizione del Cavaliere diventa un compagno animale adulto, ottenendo capacita aggiuntive. Durante un incontro, anche se non usi l'azione Comandare un Animale, il tuo compagno animale può comunque usare 1 azione nel tuo turno per Avanzare o Colpire.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-MLxtuzQQfK2YSw2o" transform="translate(3170.0,325.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Cavalcatura Rapida</text>
+<title>Cavalcatura Rapida: &lt;p&gt;&lt;strong&gt;Requisiti&lt;/strong&gt; Sei adiacente a una creatura che e più grande di te almeno di una taglia e che è disposta a essere la tua cavalcatura.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;Tu e la tua cavalcatura potete entrare in azione in un attimo. @UUID[Compendium.pf2e.actionspf2e.Item.PM5jvValFkbFH3TV]{Monti} la creatura e @UUID[Compendium.pf2e.actionspf2e.Item.q9nbyIF0PEBqMtYe]{Comandi un Animale} per impartirgli un ordine a tua scelta.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-OxzoG5LfK8N54rmO" transform="translate(2950.0,445.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Cavalcatura Fedele</text>
+<title>Cavalcatura Fedele: &lt;p&gt;Hai rafforzato il legame con la tua cavalcatura e, ora, la vostra fedeltà reciproca è incrollabile. La cavalcatura acquisita con il privilegio di classe alleato divino si considera adesso un compagno animale adulto (pag. 214). Inoltre, la tua cavalcatura non ti attacca mai, anche se le viene ordinato di farlo con la magia.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-vDDA4WiN0Sfbn2YB" transform="translate(3170.0,445.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Difendere Cavalcatura</text>
+<title>Difendere Cavalcatura: &lt;p&gt;&lt;strong&gt;Innesco&lt;/strong&gt; Un nemico effettua un tiro per colpire contro la tua cavalcatura mentre la stai cavalcando.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;Ti frapponi tra un attaccante e la tua cavalcatura difendendola dai danni.&lt;/p&gt;
+&lt;p&gt;Usa la tua CA contro l'attacco innescante anziché la CA della tua cavalcatura. Se l'attacco innescante va a segno, subisti gli effetti dell'attacco al posto della tua cavalcatura.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-AnDNZk4FSRfrFHxt" transform="translate(2950.0,565.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Cavalcatura Incredibile</text>
+<title>Cavalcatura Incredibile: &lt;p&gt;Grazie alle cure e all'addestramento, la tua cavalcatura realizza il suo potenziale innato. La cavalcatura che hai ottenuto con il talento Dedizione del Cavaliere diventa un compagno animale agile o feroce (a tua scelta), ottenendo capacità aggiuntive determinate dal tipo di compagno.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-wtPBFvGSoI64fvIi" transform="translate(2950.0,685.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Cavalcatura Specializzata</text>
+<title>Cavalcatura Specializzata: &lt;p&gt;Hai addestrato la tua cavalcatura a operare in circostanze insolite o addirittura estreme, conferendole capacità che vanno ben oltre quelle della sua specie. La tua cavalcatura ottiene una specializzazione a tua scelta.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Speciale&lt;/strong&gt; Puoi selezionare questo talento fino a tre volte. Ogni volta aggiungi una diversa specializzazione alla tua cavalcatura, che può avere fino a tre specializzazioni.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-aD6aorNkRGL2Ghun" transform="translate(2510.0,325.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Compagno Animale</text>
+<title>Compagno Animale: &lt;p&gt;Ottieni i servigi di un compagno animale giovane (pag 206 Manuale del Giocatore), che ti segue nelle tue avventure e obbedisce ai semplici comandi gli impartisci al meglio delle sue capacità.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-Gb3WO5D8Kgk5oamj" transform="translate(2510.0,445.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Richiamo del Compagno</text>
+<title>Richiamo del Compagno: &lt;p&gt;Puoi spronare il tuo compagno a dare tutto. Puoi spendere 2 azioni per @UUID[Compendium.pf2e.actionspf2e.Item.q9nbyIF0PEBqMtYe]{Comandare un Animale}, anziché 1, quando impartisci ordini al tuo compagno animale. Così facendo, il compagno utilizza un'azione aggiuntiva.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-uwV7u6mLErEhv43y" transform="translate(2510.0,565.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Compagno Furtivo</text>
+<title>Compagno Furtivo: &lt;p&gt;Hai addestrato il tuo compagno animale a confondersi con l'ambiente circostante. Il compagno ottiene i benefici del talento @UUID[Compendium.pf2e.feats-srd.Item.qqe5VmcO1s8iTOfd]{Mimetizzazione}. Se il compagno è un agguatatore specializzato, il suo grado di competenza in Furtività aumenta a maestro (o a leggendario se era già maestro).&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-frqNFrGymLsyhvKU" transform="translate(1190.0,325.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Improvvisare Senza Addestramento</text>
+<title>Improvvisare Senza Addestramento: &lt;p&gt;Sai come gestire una situazione che non ti è familiare. Il tuo bonus di competenza alle prove di abilità senza addestramento è pari a metà del tuo livello invece di +0. Se sei di 7° livello o superiore, esso diviene pari al tuo livello. Non puoi utilizzare le azioni con addestramento delle abilità.s.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-VEyWVTi8XOLPk27d" transform="translate(90.0,325.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Numb to Death</text>
+<title>Numb to Death: &lt;p&gt;&lt;strong&gt;Frequency&lt;/strong&gt; once per day&lt;/p&gt;&lt;hr /&gt;&lt;p&gt;Your past has left you numb to death's call. The first time each day that you regain Hit Points while you are dying, you gain a circumstance bonus to the number of Hit Points you regain equal to your level, and you neither gain the wounded condition nor increase the value of this condition.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-JkuTs0goX4Yp4cQ0" transform="translate(2070.0,685.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Improvvisare Senza Addestramento</text>
+<title>Improvvisare Senza Addestramento: &lt;p&gt;Sai come gestire una situazione che non ti è familiare. Il tuo bonus di competenza alle prove di abilità senza addestramento è pari a metà del tuo livello invece di +0. Se sei di 7° livello o superiore, esso diviene pari al tuo livello. Non puoi utilizzare le azioni con addestramento delle abilità.s.&lt;/p&gt;</title>
+</g>
+</svg></div>
+<div id="info"><h2>Seleziona un nodo</h2><div id="content">Passa sopra o clicca su un nodo per vedere la descrizione.</div></div>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+const nodes = {"node-5CqC5JPQiGMuKsw4": {"title": "Mobilit\u00e0", "desc": null},"node-91hOycVV6Lxhrm9T": {"title": "Tenacia", "desc": null},"node-qZrzGr3SC3l94nPw": {"title": "Altromondo", "desc": null},"node-1p6QqELvyEL4idrI": {"title": "Mentalit\u00e0", "desc": null},"node-TugkHd8rpyy7IyJf": {"title": "Agile", "desc": "<p>Cammini rapidamente. La tua Velocit\u00e0 aumenta di 1,5 metri.</p>"},"node-GqrQAWbL6IwFC1iL": {"title": "Passo Morbido", "desc": "<p>Ti muovi con agilit\u00e0 e rapidit\u00e0. Puoi fare un Passo anche in un terreno difficile.</p>"},"node-jpjAvzaSG0MX942j": {"title": "Pet Terapist", "desc": null},"node-M3B3JKSqT8NTyjWO": {"title": "Animale Domestico", "desc": "<p>Hai un animale domestico: un animale Minuscolo di un tipo a tua scelta, come un gatto, un uccello o un roditore. Ha il tratto servitore, il che significa che ottieni 2 azioni durante il tuo turno se usi l'azione @UUID[Compendium.pf2e.actionspf2e.Item.q9nbyIF0PEBqMtYe]{Comandare un Animale} per impartirgli degli ordini; questo sostituisce i normali effetti di Comandare un Animale e non hai bisogno di effettuare una prova di Natura. Un animale domestico non pu\u00f2 sferrare Colpi.</p><p><strong>Livello</strong> Il livello del tuo animale domestico \u00e8 pari al tuo.</p><p><strong>Modificatori e CA</strong> I modificatori dei tiri salvezza e la CA del tuo animale domestico sono uguali ai tuoi prima di applicare i bonus o le penalit\u00e0 di circostanza o di status. L'animale domestico usa 3 + il tuo livello come suo modificatore di Percezione, Acrobazia e Furtivit\u00e0 e solo il tuo livello come modificatore per le sue altre prove di abilit\u00e0. Non ha n\u00e9 usa i propri modificatori di attributo e non pu\u00f2 mai beneficiare di bonus di oggetto.</p><p><strong>Punti Ferita</strong> Il tuo animale domestico ha 5 Punti Ferita per livello.</p><p><strong>Sensi</strong> Il tuo animale domestico ha visione crepuscolare e pu\u00f2 ottenere sensi aggiuntivi dalle capacit\u00e0 da animale domestico.</p><p><strong>Velocit\u00e0</strong> La velocit\u00e0 del tuo animale domestico \u00e8 7,5 metri. Puoi scegliere di avere invece un animale domestico acquatico, che respira in acqua anzich\u00e9 respirare aria e ha il tratto acquatico, non ha Velocit\u00e0 sul terreno ma una Velocit\u00e0 di nuotare di 7,5 metri.</p><p><strong>Capacit\u00e0 da Animale Domestico</strong> Quando ottieni un animale domestico, scegli due delle capacit\u00e0 seguenti. Se il tuo animale domestico \u00e8 un animale che avrebbe una di queste capacit\u00e0 di natura (ad esempio, un gufo ha una Velocit\u00e0 di volare), devi selezionare quella capacit\u00e0. Il tuo animale domestico non pu\u00f2 essere un animale che per sua natura ha pi\u00f9 capacit\u00e0 da animale domestico del massimo previsto. In alcuni casi, il GM potrebbe aggiungere alcune capacit\u00e0 del famiglio (descritte alle pagg. 212-213 Manuale del Giocatore) alle capacit\u00e0 da animale domestico tra cui puoi scegliere.</p><ul><li><strong>Anfibio</strong> Ottiene il tratto anfibio, che gli permette di respirare sia l'aria che in acqua e ha sia una Velocit\u00e0 sul terreno, sia una Velocit\u00e0 di nuotare, entrambe pari alla Velocit\u00e0 pi\u00f9 alta che possiede tra quella sul terreno e quella di nuotare.</li><li><strong>Scavatore</strong> Ottiene una Velocit\u00e0 di scavare di 1,5 metri, che gli permette di scavare dei buchi Minuscoli.</li><li><strong>Scalatore</strong> Ottiene una Velocit\u00e0 di scalare di 7,5 metri.</li><li><strong>Scurovisione</strong> Ottiene scurovisione.</li><li><strong>Ecolocalizzazione</strong> Pu\u00f2 usare l'udito come senso preciso entro 6 metri.</li><li><strong>Movimento Veloce</strong> Aumenta una delle Velocit\u00e0 dell'animale domestico da 7,5 metri a 12 metri.</li><li><strong>Volante</strong> Ottiene una Velocit\u00e0 di volare di 7,5 metri.</li><li><strong>Destrezza Manuale</strong> Pu\u00f2 usare fino a due dei suoi arti come se fossero mani per eseguire azioni col tratto maneggiare.</li><li><strong>Fiuto</strong> Usa fiuto come senso impreciso entro 9 metri.</li><li><strong>Robusto</strong> I PF massimi del tuo animale domestico aumentano di 2 per livello.</li></ul><hr /><p><strong>Speciale</strong> Puoi ottenere un nuovo animale domestico riaddestrando questo talento e rilasciando qualsiasi altro animale domestico tu avessi in precedenza. Se in seguito ottieni un famiglio o un altro compagno che usa il talento Animale Domestico, puoi immediatamente riaddestrare questo talento.</p>"},"node-1aaDaWWknL2fqPj8": {"title": "Cavalcare", "desc": "<p>Quando Comandi un Animale su cui sei in sella di compiere un'azione di movimento (come Avanzare) non devi effettuare la prova e ottieni un successo automatico. L'animale su cui sei in sella agisce nel tuo turno come un servitore. Se Monti un animale nel bel mezzo di un incontro, salta il suo turno successivo e agisce nel tuo prossimo turno. Vedi pag. 250 per saperne di pi\u00f9 sul funzionamento di Comandare un Animale.</p>"},"node-j5lgVmMwEKX3qadl": {"title": "Duro a Morire", "desc": "<p>Sei duro a morire, pi\u00f9 di molte altre persone. Muori per via della condizione morente a 5, invece che a morente 4.</p>"},"node-cJ6Ybrn5yPr7CS7o": {"title": "Ripresa Rapida", "desc": "<p>Il tuo corpo \u00e8 in grado di riprendersi molto pi\u00f9 in fretta dalle afflizioni. Quando riposi, recuperi il doppio dei Punti Ferita. Ogni volta che superi un tiro salvezza su Tempra contro un avvelenamento o una malattia in corso, ne riduci la fase di 2 o 1 se la tossina o il morbo sono virulenti. Ogni successo critico ottenuto contro un avvelenamento o una malattia in corso ne riduce la fase di 3 o 2 se sono virulenti. Inoltre, quando riposi per una notte, riduci la gravit\u00e0 della tua condizione risucchiato di 2 anzich\u00e9 di 1.</p>"},"node-vCOEOADxLTLI9lrq": {"title": "Robustezza", "desc": "<p>Sopporti le sofferenza fisiche meglio di molti prima di crollare. Aumenta i tuoi Punti Ferita massimi di un numero pari al tuo livello e la CD delle prove per il recupero \u00e8 pari a 9 + il tuo valore della condizione morente.</p>"},"node-IjJz4Z0gT18uuI9P": {"title": "Controllo del Respiro", "desc": "<p>Riesci a regolare incredibilmente bene la tua respirazione. Ci\u00f2 ti conferisce alcuni vantaggi quando sei a corto d'aria, e quando respirare \u00e8 pericoloso. Puoi trattenere il respiro 25 volte pi\u00f9 a lungo del normale prima di soffocare. Ottieni bonus di circostanza + 1 ai tiri salvezza contro le minacce inalate, come veleni inalati, e consideri i successi su questi tiri salvezza come successi critici.</p>"},"node-ca6xhKVLNdItTE2P": {"title": "Intelletto Acuto", "desc": "<p>La tua elusivit\u00e0 o abilit\u00e0 nell'osservare sfugge alla comprensione di molti colleghi nella tua professione. Scegli tra tiri salvezza su Tempra, Riflessi o Volont\u00e0, o Percezione. Divieni esperto nella tua scelta. Al 17\u00b0 livello, ne divieni maestro.</p>"},"node-ASYbOjkKTjrQUA3X": {"title": "Iniziativa Incredibile", "desc": "<p>Puoi reagire pi\u00f9 velocemente degli altri. Ottieni bonus di circostanza +2 ai tiri di iniziativa.</p>"},"node-zQHAzD0AdQGlauJW": {"title": "Stirpe Acquisita", "desc": "<p>Sei completamente immerso nella cultura e nelle tradizioni di un'altra stirpe, che tu sia nato in quell'ambiente, che te lo sia guadagnato tramite qualche rito di passaggio o che tu sia stato segnato da un'importante amicizia o storia d'amore. Scegli una stirpe comune o un'altra stirpe alla quale hai accesso. Puoi selezionare i talenti di quella stirpe, oltre ai talenti di stirpe del tuo personaggio, fintanto che quei talenti di stirpe non necessitino, a discrezione del GM, di particolari caratteristiche fisiologiche di cui sei sprovvisto.</p>"},"node-7e6NjZOtWaMjjbU8": {"title": "Mondi Diversi", "desc": "<p>La tua variegata esperienza in societ\u00e0 diverse si \u00e8 sviluppata in una vita completamente separata. Creati una seconda identit\u00e0 con un nome, una storia e un background completamente diversi. Questa identit\u00e0 deve appartenere a una delle stirpi di cui puoi scegliere i talenti di stirpe. Ottieni il grado di competenza addestrato nell'abilit\u00e0 di Sapienza del secondo background scelto (non ottieni nessun altro dei benefici di quel background) e bonus di circostanza +4 alle prove di Inganno quando fai un'affermazione coerente con la tua seconda identit\u00e0 o quando cerchi di camuffarti assumendo la tua seconda identit\u00e0.</p>"},"node-JOoozkM3VujHjccl": {"title": "Zampettare", "desc": "<p>Puoi strisciare rapidamente sul terreno. Puoi @UUID[Compendium.pf2e.actionspf2e.Item.Tj055UcNm6UEgtCg]{Andare Carponi} fino a met\u00e0 della tua Velocit\u00e0.</p>"},"node-R3W6zugygEmrpSBQ": {"title": "Investitura Incredibile", "desc": "<p>Sei incredibilmente bravo nell'investire pi\u00f9 oggetti magici. Aumenta il limite degli oggetti investiti da 10 a 12.</p>"},"node-eDm6Ya2Xz3jQYb0W": {"title": "Segugio", "desc": null},"node-lOFKAJiEHa9vbyUb": {"title": "Traffichino", "desc": null},"node-dyEC2FI4Vd3hTo3h": {"title": "Gestore di Mercenari", "desc": "<p>Sei in grado di trovare e assicurarti manodopera migliore degli altri. Quando ti procuri un mercenario per un servizio, quel mercenario ottiene bonus di circostanza +2 a tutte le prove di abilit\u00e0. Questo bonus di circostanza si applica sia ai mercenari addestrati che a quelli senza addestramento e non incide sul costo del servizio o della manodopera fornita.</p>"},"node-Wxr4xHAJ7Lj45RqS": {"title": "Pianificatore Preveggente", "desc": "<p><strong>Costo</strong> il Prezzo dell'oggetto scelto</p>\n<p><strong>Requisiti</strong> Non hai usato questa capacit\u00e0 dall'ultima volta che hai potuto acquistare beni</p>\n<hr />\n<p>Crei regolarmente piani complessi e di emergenza, usando le tue risorse per metterli in atto. Impieghi 1 minuto per rimuovere il tuo zaino, poi rimuovi con cura un oggetto che non avevi dichiarato di aver acquistato in precedenza: hai intuito che ti sarebbe servito e lo hai acquistato all'ultima occasione. </p>\n<p>L'oggetto deve essere un equipaggiamento da avventura (dalla tabella del <em>Manuale di Gioco</em> o da altre fonti di equipaggiamento da avventura), e non pu\u00f2 essere un'arma, un'armatura, un oggetto alchemico, un oggetto magico o un altro tesoro.</p>\n<p>Deve essere comune e di un livello non superiore alla met\u00e0 del tuo livello, e il suo Volume deve essere abbastanza leggero da averlo potuto portare senza appesantirti.</p>"},"node-rPN4KjvxzdnVIZwJ": {"title": "Ricerca Scrupolosa", "desc": "<p>Impieghi pi\u00f9 tempo a cercare, per assicurarti di trovare tutto. Quando @UUID[Compendium.pf2e.actionspf2e.Item.TiNDYUGlMmxzxBYU]{Cerchi}, puoi impiegare il doppio del tempo nella ricerca. Normalmente questo significa che Cerchi a un ritmo di un quarto della tua Velocit\u00e0, fino a un massimo di 45 metri al minuto o 22,5 metri al minuto per controllare ogni luogo prima di entrarvi. Se lo fai, ottieni bonus di circostanza +2 alle tue prove di Percezione per @UUID[Compendium.pf2e.actionspf2e.Item.BlAOM2X92SI6HMtJ]{Individuare}.</p>"},"node-If94D47znME1v4UW": {"title": "Riparazione Improvvisata", "desc": "<p>Sei abile nel Riparare rapidamente gli oggetti Danneggiati, ma le tue Riparazioni non sono destinate a durare per sempre.</p>\n<p>Esegui una @UUID[Compendium.pf2e.actionspf2e.Item.bT3skovyLUtP22ME]{Riparazione} rapida di un oggetto non magico rotto in tuo possesso. Fino a quando l'oggetto non subisce nuovamente dei danni, puoi continuare a usarlo come oggetto scadente del suo tipo. Questa riparazione non ripristina Punti Ferita, quindi l'oggetto \u00e8 facile da distruggere. Una volta che viene Riparato normalmente in modo che non sia pi\u00f9 rotto, l'oggetto non \u00e8 pi\u00f9 scadente. </p>"},"node-poIiusZNN1jklrHJ": {"title": "Ricerca Spedita", "desc": "<p>Disponi di un metodo che ti permette di cercare rapidamente scoprendo dettagli e segreti al doppio della velocit\u00e0. Quando Cerchi in un'area impieghi la met\u00e0 del tempo. Ci\u00f2 significa che mentre esplori, raddoppi la Velocit\u00e0 con cui ti muovi e ti assicuri di aver esaminato un'area prima di entrarvi (fino a met\u00e0 della tua Velocit\u00e0). Se sei leggendario in Percezione, Cerchi in un'area quattro volte pi\u00f9 rapidamente.</p>"},"node-EndmOOWgZxBPt0yE": {"title": "Esploratore Incredibile", "desc": "<p>Quando vai in esplorazione sei particolarmente attento al pericolo e dai ai tuoi alleati momenti preziosi per prepararsi a combattere.</p>\n<p>Quando usi l'attivit\u00e0 di esplorazione @UUID[Compendium.pf2e.actionspf2e.Item.kV3XM0YJeS2KCSOb]{Perlustrare}, conferisci ai tuoi alleati bonus di circostanza +2 ai loro tiri di Iniziativa, anzich\u00e9 bonus di circostanza +1.</p>\n<p>@UUID[Compendium.pf2e.other-effects.Item.la8rWwUtReElgTS6]{Effetto: Perlustrare (Esploratore Incredibile)}</p>"},"node-2oLFkDaWbRgPcT2K": {"title": "Sanguine Tenacity", "desc": "<p>Your blood carries permanent regenerative properties. The penalties from @UUID[Compendium.pf2e.conditionitems.Item.MIRkyAjyBeXivMa7]{Enfeebled} and the penalties and lost HP from @UUID[Compendium.pf2e.conditionitems.Item.4D2KBtexWXa6oUMR]{Drained} both affect you as if the condition values were 1 lower than they actually are. You also gain resistance 5 to persistent bleed damage and reduce the DC of checks to recover from persistent bleed damage to 11, or 6 if you have particularly effective assistance.</p>"},"node-FMI3KhYYjsP7Fhly": {"title": "Robust Health", "desc": "<p>Your physiology responds well to first aid. You gain a circumstance bonus to the number of Hit Points you regain equal to your level from a successful attempt to @UUID[Compendium.pf2e.actionspf2e.Item.1kGNdIIhuglAjIp9]{Treat your Wounds} or use @UUID[Compendium.pf2e.feats-srd.Item.wYerMk6F1RZb0Fwt]{Battle Medicine} on you. After you or an ally use Battle Medicine on you, you become temporarily immune to that Battle Medicine for only 1 hour, instead of 1 day.</p>"},"node-xotkMLtNWcctubh2": {"title": "A Home in Every Port", "desc": "<p>You have a reputation in towns and villages you've visited, and residents are always willing to open their doors to you.</p>\n<p>When in a town or village, during downtime, you can spend 8 hours to locate a resident willing to provide lodging for you and up to six allies for up to 24 hours at no charge. The standard of living within the acquired lodging is comfortable, and square meals are provided at no cost.</p>\n<p>After 24 hours, you must pay standard prices for further lodging and meals or use this feat again to find a new resident willing to host you.</p>"},"node-MSsZCtPiAKXAs5Ay": {"title": "Monouso Preveggente", "desc": "<p>Puoi prevedere in anticipo di quali monouso potresti aver bisogno. Quando usi Pianificatore Preveggente, puoi tirar fuori un oggetto monouso dal tuo zaino, invece di un equipaggiamento da avventura. L'oggetto monouso deve comunque essere comune e di un livello non superiore alla met\u00e0 del tuo livello, e il suo Volume deve essere abbastanza leggero da averlo potuto portare senza appesantirti.</p>"},"node-gFI3OwkgPyFo7Nxt": {"title": "Cavalcatura Impressionante", "desc": "<p>Hai addestrato la tua cavalcatura a diventare una forza poderosa sul campo di battaglia. La cavalcatura che hai ottenuto con il talento Dedizione del Cavaliere diventa un compagno animale adulto, ottenendo capacita aggiuntive. Durante un incontro, anche se non usi l'azione Comandare un Animale, il tuo compagno animale pu\u00f2 comunque usare 1 azione nel tuo turno per Avanzare o Colpire.</p>"},"node-MLxtuzQQfK2YSw2o": {"title": "Cavalcatura Rapida", "desc": "<p><strong>Requisiti</strong> Sei adiacente a una creatura che e pi\u00f9 grande di te almeno di una taglia e che \u00e8 disposta a essere la tua cavalcatura.</p>\n<hr />\n<p>Tu e la tua cavalcatura potete entrare in azione in un attimo. @UUID[Compendium.pf2e.actionspf2e.Item.PM5jvValFkbFH3TV]{Monti} la creatura e @UUID[Compendium.pf2e.actionspf2e.Item.q9nbyIF0PEBqMtYe]{Comandi un Animale} per impartirgli un ordine a tua scelta.</p>"},"node-OxzoG5LfK8N54rmO": {"title": "Cavalcatura Fedele", "desc": "<p>Hai rafforzato il legame con la tua cavalcatura e, ora, la vostra fedelt\u00e0 reciproca \u00e8 incrollabile. La cavalcatura acquisita con il privilegio di classe alleato divino si considera adesso un compagno animale adulto (pag. 214). Inoltre, la tua cavalcatura non ti attacca mai, anche se le viene ordinato di farlo con la magia.</p>"},"node-vDDA4WiN0Sfbn2YB": {"title": "Difendere Cavalcatura", "desc": "<p><strong>Innesco</strong> Un nemico effettua un tiro per colpire contro la tua cavalcatura mentre la stai cavalcando.</p>\n<hr />\n<p>Ti frapponi tra un attaccante e la tua cavalcatura difendendola dai danni.</p>\n<p>Usa la tua CA contro l'attacco innescante anzich\u00e9 la CA della tua cavalcatura. Se l'attacco innescante va a segno, subisti gli effetti dell'attacco al posto della tua cavalcatura.</p>"},"node-AnDNZk4FSRfrFHxt": {"title": "Cavalcatura Incredibile", "desc": "<p>Grazie alle cure e all'addestramento, la tua cavalcatura realizza il suo potenziale innato. La cavalcatura che hai ottenuto con il talento Dedizione del Cavaliere diventa un compagno animale agile o feroce (a tua scelta), ottenendo capacit\u00e0 aggiuntive determinate dal tipo di compagno.</p>"},"node-wtPBFvGSoI64fvIi": {"title": "Cavalcatura Specializzata", "desc": "<p>Hai addestrato la tua cavalcatura a operare in circostanze insolite o addirittura estreme, conferendole capacit\u00e0 che vanno ben oltre quelle della sua specie. La tua cavalcatura ottiene una specializzazione a tua scelta.</p>\n<p><strong>Speciale</strong> Puoi selezionare questo talento fino a tre volte. Ogni volta aggiungi una diversa specializzazione alla tua cavalcatura, che pu\u00f2 avere fino a tre specializzazioni.</p>"},"node-aD6aorNkRGL2Ghun": {"title": "Compagno Animale", "desc": "<p>Ottieni i servigi di un compagno animale giovane (pag 206 Manuale del Giocatore), che ti segue nelle tue avventure e obbedisce ai semplici comandi gli impartisci al meglio delle sue capacit\u00e0.</p>"},"node-Gb3WO5D8Kgk5oamj": {"title": "Richiamo del Compagno", "desc": "<p>Puoi spronare il tuo compagno a dare tutto. Puoi spendere 2 azioni per @UUID[Compendium.pf2e.actionspf2e.Item.q9nbyIF0PEBqMtYe]{Comandare un Animale}, anzich\u00e9 1, quando impartisci ordini al tuo compagno animale. Cos\u00ec facendo, il compagno utilizza un'azione aggiuntiva.</p>"},"node-uwV7u6mLErEhv43y": {"title": "Compagno Furtivo", "desc": "<p>Hai addestrato il tuo compagno animale a confondersi con l'ambiente circostante. Il compagno ottiene i benefici del talento @UUID[Compendium.pf2e.feats-srd.Item.qqe5VmcO1s8iTOfd]{Mimetizzazione}. Se il compagno \u00e8 un agguatatore specializzato, il suo grado di competenza in Furtivit\u00e0 aumenta a maestro (o a leggendario se era gi\u00e0 maestro).</p>"},"node-frqNFrGymLsyhvKU": {"title": "Improvvisare Senza Addestramento", "desc": "<p>Sai come gestire una situazione che non ti \u00e8 familiare. Il tuo bonus di competenza alle prove di abilit\u00e0 senza addestramento \u00e8 pari a met\u00e0 del tuo livello invece di +0. Se sei di 7\u00b0 livello o superiore, esso diviene pari al tuo livello. Non puoi utilizzare le azioni con addestramento delle abilit\u00e0.s.</p>"},"node-VEyWVTi8XOLPk27d": {"title": "Numb to Death", "desc": "<p><strong>Frequency</strong> once per day</p><hr /><p>Your past has left you numb to death's call. The first time each day that you regain Hit Points while you are dying, you gain a circumstance bonus to the number of Hit Points you regain equal to your level, and you neither gain the wounded condition nor increase the value of this condition.</p>"},"node-JkuTs0goX4Yp4cQ0": {"title": "Improvvisare Senza Addestramento", "desc": "<p>Sai come gestire una situazione che non ti \u00e8 familiare. Il tuo bonus di competenza alle prove di abilit\u00e0 senza addestramento \u00e8 pari a met\u00e0 del tuo livello invece di +0. Se sei di 7\u00b0 livello o superiore, esso diviene pari al tuo livello. Non puoi utilizzare le azioni con addestramento delle abilit\u00e0.s.</p>"}};
+const content = document.getElementById('content');
+function show(id){
+  const d = nodes[id];
+  if(!d) return;
+  content.innerHTML = `<h3>${d.title}</h3><div>${d.desc}</div>`;
+}
+(function(){
+  const svg = d3.select('#viewer').select('svg');
+  if (!svg.node()) return;
+  // wrap existing content in a g.zoom-layer
+  let g = svg.select('g#zoom-layer');
+  if (g.empty()) {
+    g = svg.append('g').attr('id','zoom-layer');
+    const children = svg.node().childNodes;
+    const toMove = [];
+    for (let i = 0; i < children.length; i++) toMove.push(children[i]);
+    toMove.forEach(n => { if (n !== g.node()) g.node().appendChild(n); });
+  }
+  const zoom = d3.zoom().scaleExtent([0.5,8]).on('zoom', (event) => { g.attr('transform', event.transform); });
+  svg.call(zoom).call(zoom.transform, d3.zoomIdentity);
+  // bind node events
+  Object.keys(nodes).forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('mouseover', () => show(id));
+    el.addEventListener('click', () => show(id));
+  });
+})();
+</script>
+</body>
+</html>
