@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Skill Tree - interattivo</title>
+<style>
+body {{ font-family: Arial, Helvetica, sans-serif; margin:0; display:flex; height:100vh; }}
+#viewer {{ flex:1; overflow:auto; background:#111; }}
+#info {{ width:300px; background:#f7f7f7; padding:10px; box-shadow:-2px 0 4px rgba(0,0,0,0.2); overflow:auto }}
+#info h2 {{ margin-top:0; }}
+.node:hover rect.card {{ stroke: #fff; stroke-width:2; filter: drop-shadow(0 0 8px rgba(255,255,255,0.2)); }}
+</style>
+</head>
+<body>
+<div id="viewer"><svg xmlns="http://www.w3.org/2000/svg" width="2100" height="360" viewBox="0 0 2100 360">
+<defs>
+<style type="text/css"><![CDATA[
+.node { cursor: pointer; }
+.text { font-family: Arial, Helvetica, sans-serif; font-size: 12px; fill: #fff; }
+.title { font-weight: bold; font-size: 13px; }
+.line { stroke: #888; stroke-width: 3; stroke-linecap: round; }
+.card { rx:10; ry:10; }
+.tooltip { pointer-events:none; font-size:12px; }
+
+]]></style>
+</defs>
+<line class="line" x1="610.0" y1="240.0" x2="610.0" y2="120.0" />
+<g class="node" id="node-KEPd3cue7pZCt5uk" transform="translate(530.0,85.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Attacco Furtivo</text>
+<title>Attacco Furtivo: &lt;p&gt;Quando un nemico non riesce a difendersi adeguatamente, ne approfitti per infliggere danni aggiuntivi. Se Colpisci una creatura che subisce la condizione @UUID[Compendium.pf2e.conditionitems.Item.AJh5ex99aV6VTggg]{impreparato} con un'arma da mischia agile o accurata, un attacco senz'armi con il tratto agile o accurata, con un'arma a distanza o con un attacco senz'armi a distanza, infliggi 1d6 danni di precisione aggiuntivi. Nel caso di attacco a distanza con un'arma da mischia da lancio, quest'ultima deve a sua volta possedere il tratto agile o accurata.&lt;/p&gt;
+&lt;p&gt;Man mano che avanzi di livello come canaglia, aumenta anche il numero di dadi di danno del tuo attacco furtivo. Incrementi di uno il numero di dadi al 5°, all'11° e al 17° livello.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-GRkjSEgQCrq0qCcE" transform="translate(530.0,205.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Attacco Improvviso</text>
+<title>Attacco Improvviso: &lt;p&gt;Entri in battaglia senza dare ai nemici il tempo di reagire. Nel primo round di combattimento, se tiri su Inganno o Furtività per l'iniziativa, consideri impreparate le creature che non hanno ancora agito.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-i8NvaJdidxsZT4tI" transform="translate(970.0,85.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Colpo Reattivo</text>
+<title>Colpo Reattivo: &lt;p&gt;Sempre alla ricerca di un punto debole, attacchi rapidamente i nemici che lasciano varchi nelle loro difese. Ottieni la reazione @UUID[Compendium.pf2e.actionspf2e.Item.KAVf7AmRnbCAHrkT]{Colpo Reattivo}.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-izSXrnqXNkhAS4qo" transform="translate(1410.0,85.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Cacciare la Preda</text>
+<title>Cacciare la Preda: &lt;p&gt;Quando concentri la tua attenzione su un singolo nemico, il tuo inseguimento diventa inarrestabile. Ottieni l'azione @UUID[Compendium.pf2e.actionspf2e.Item.JYi4MnsdFu618hPm]{Cacciare la Preda}.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-lmHIyG5qEKCcuDLZ" transform="translate(1850.0,85.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Stile dello Spadaccino</text>
+<title>Stile dello Spadaccino: &lt;p&gt;In quanto spadaccino, hai un tuo stile caratteristico che ti permette di gestire con grazia gli eventi più banali e le situazioni di vita o di morte. Scegli uno stile dello spadaccino, che determina le azioni aggiuntive che usi per ottenere spavalderia e ti rende addestrato nell'abilità relativa a quell'azione.&lt;/p&gt;</title>
+</g>
+<g class="node" id="node-ZLd4orvIAyYxG8tm" transform="translate(90.0,85.0)">
+<rect class="card" width="160" height="70" fill="#2b2b2b" stroke="#000" stroke-width="1" />
+<text class="text title" x="80.0" y="29.0" dominant-baseline="middle" text-anchor="middle">Istinto</text>
+<title>Istinto: &lt;p&gt;Incanali la furia attraverso un istinto. Sei tu a decidere in che forma esso si manifesti: può essere una creatura o un simbolo importante per il tuo clan, o qualcosa di puramente interiore che genera o filtra la tua rabbia, come una convinzione, una maledizione, un retaggio o uno stato mentale. Ogni istinto conferisce una capacità di istinto e ulteriori capacità acquisibili con i talenti di istinto. Inoltre, determina i tipi di danno a cui resisti tramite resistenza furiosa e, ai livelli più alti, incrementa i danni aggiuntivi che infliggi @UUID[Compendium.pf2e.classfeatures.Item.WZUCvxqbigXos1L9]{Infuriandoti}.&lt;/p&gt;
+&lt;p&gt;Per ciascun istinto vengono indicati degli atti che per esso rappresentano degli anatemi: se li compi, perdi le capacità di istinto e tutti i talenti di istinto finché non dedichi 1 giorno di pausa a riarmonizzare il tuo spirito, ma conservi tutte le altre capacità da barbaro.&lt;/p&gt;</title>
+</g>
+</svg></div>
+<div id="info"><h2>Seleziona un nodo</h2><div id="content">Passa sopra o clicca su un nodo per vedere la descrizione.</div></div>
+<script>
+const nodes = {"node-KEPd3cue7pZCt5uk": {"title": "Attacco Furtivo", "desc": "<p>Quando un nemico non riesce a difendersi adeguatamente, ne approfitti per infliggere danni aggiuntivi. Se Colpisci una creatura che subisce la condizione @UUID[Compendium.pf2e.conditionitems.Item.AJh5ex99aV6VTggg]{impreparato} con un'arma da mischia agile o accurata, un attacco senz'armi con il tratto agile o accurata, con un'arma a distanza o con un attacco senz'armi a distanza, infliggi 1d6 danni di precisione aggiuntivi. Nel caso di attacco a distanza con un'arma da mischia da lancio, quest'ultima deve a sua volta possedere il tratto agile o accurata.</p>\n<p>Man mano che avanzi di livello come canaglia, aumenta anche il numero di dadi di danno del tuo attacco furtivo. Incrementi di uno il numero di dadi al 5\u00b0, all'11\u00b0 e al 17\u00b0 livello.</p>"},"node-GRkjSEgQCrq0qCcE": {"title": "Attacco Improvviso", "desc": "<p>Entri in battaglia senza dare ai nemici il tempo di reagire. Nel primo round di combattimento, se tiri su Inganno o Furtivit\u00e0 per l'iniziativa, consideri impreparate le creature che non hanno ancora agito.</p>"},"node-i8NvaJdidxsZT4tI": {"title": "Colpo Reattivo", "desc": "<p>Sempre alla ricerca di un punto debole, attacchi rapidamente i nemici che lasciano varchi nelle loro difese. Ottieni la reazione @UUID[Compendium.pf2e.actionspf2e.Item.KAVf7AmRnbCAHrkT]{Colpo Reattivo}.</p>"},"node-izSXrnqXNkhAS4qo": {"title": "Cacciare la Preda", "desc": "<p>Quando concentri la tua attenzione su un singolo nemico, il tuo inseguimento diventa inarrestabile. Ottieni l'azione @UUID[Compendium.pf2e.actionspf2e.Item.JYi4MnsdFu618hPm]{Cacciare la Preda}.</p>"},"node-lmHIyG5qEKCcuDLZ": {"title": "Stile dello Spadaccino", "desc": "<p>In quanto spadaccino, hai un tuo stile caratteristico che ti permette di gestire con grazia gli eventi pi\u00f9 banali e le situazioni di vita o di morte. Scegli uno stile dello spadaccino, che determina le azioni aggiuntive che usi per ottenere spavalderia e ti rende addestrato nell'abilit\u00e0 relativa a quell'azione.</p>"},"node-ZLd4orvIAyYxG8tm": {"title": "Istinto", "desc": "<p>Incanali la furia attraverso un istinto. Sei tu a decidere in che forma esso si manifesti: pu\u00f2 essere una creatura o un simbolo importante per il tuo clan, o qualcosa di puramente interiore che genera o filtra la tua rabbia, come una convinzione, una maledizione, un retaggio o uno stato mentale. Ogni istinto conferisce una capacit\u00e0 di istinto e ulteriori capacit\u00e0 acquisibili con i talenti di istinto. Inoltre, determina i tipi di danno a cui resisti tramite resistenza furiosa e, ai livelli pi\u00f9 alti, incrementa i danni aggiuntivi che infliggi @UUID[Compendium.pf2e.classfeatures.Item.WZUCvxqbigXos1L9]{Infuriandoti}.</p>\n<p>Per ciascun istinto vengono indicati degli atti che per esso rappresentano degli anatemi: se li compi, perdi le capacit\u00e0 di istinto e tutti i talenti di istinto finch\u00e9 non dedichi 1 giorno di pausa a riarmonizzare il tuo spirito, ma conservi tutte le altre capacit\u00e0 da barbaro.</p>"}};
+const content = document.getElementById('content');
+function show(id){
+  const d = nodes[id];
+  if(!d) return;
+  content.innerHTML = `<h3>${d.title}</h3><div>${d.desc}</div>`;
+}
+// add listeners
+Object.keys(nodes).forEach(id => {
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.addEventListener('mouseover', () => show(id));
+  el.addEventListener('click', () => show(id));
+});
+</script>
+</body>
+</html>
